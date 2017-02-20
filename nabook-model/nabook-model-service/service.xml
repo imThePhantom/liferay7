@@ -1,0 +1,302 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder package-path="com.nabook">
+	<author>phantoan</author>
+	<namespace>nab</namespace>
+
+	<!--<entity Bookstore > -->
+	<entity name="Bookstore" local-service="true" uuid="true" remote-service="false">
+
+		<!-- PK fields -->
+		<column name="bookstoreId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column> <!-- Creator Id -->
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+
+		<!-- Data fields -->
+		<column name="name" type="String"></column>
+		<column name="country" type="String"></column>
+		<column name="city" type="String"></column>
+		<column name="prefecture" type="String"></column>
+		<column name="street" type="String"></column>
+		<column name="zip" type="String"></column>
+		<column name="phone" type="String"></column>
+
+		<!-- Finder -->
+		<finder return-type="Collection" name="Location">
+			<finder-column name="country"></finder-column>
+			<finder-column name="city"></finder-column>
+			<finder-column name="prefecture"></finder-column>
+		</finder>
+		<finder return-type="Bookstore" name="Name" unique="true">
+			<finder-column name="name"></finder-column>
+		</finder>
+		<finder return-type="Bookstore" name="Phone" unique="true">
+			<finder-column name="phone"></finder-column>
+		</finder>
+		<finder name="StoreAddress" return-type="Bookstore" unique="true">
+			<finder-column name="country"></finder-column>
+			<finder-column name="city"></finder-column>
+			<finder-column name="prefecture"></finder-column>
+			<finder-column name="street"></finder-column>
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId"></finder-column>
+		</finder>
+		
+		<!-- Reference -->
+		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry"></reference>
+		<reference package-path="com.liferay.portlet.asset" entity="AssetLink"></reference>
+	</entity>
+
+	<!--<entity > -->
+	<entity name="StockItem" local-service="true" uuid="true" remote-service="false">
+
+		<!-- PK fields -->
+		<column name="stockItemId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+
+		<!-- Data fields -->
+		<column name="bookId" type="long"></column>
+		<column name="remainingQuantity" type="int"></column>
+
+		<!-- Finder -->
+		<finder return-type="StockItem" name="BookId" unique="true">
+			<finder-column name="bookId"></finder-column>
+		</finder>
+	</entity>
+
+	<!--<entity > -->
+	<entity name="Book" local-service="true" uuid="true" remote-service="false">
+
+		<!-- PK fields -->
+		<column name="bookId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+
+		<!-- Data fields -->
+		<column name="ISBN" type="String"></column>
+		<column name="title" type="String"></column>
+		<column name="subtitle" type="String"></column>
+		<column name="edition" type="String"></column>
+		<column name="volume" type="String"></column>
+		<column name="author" type="String"></column>
+		<column name="publisher" type="String"></column>
+		<column name="pubDate" type="Date"></column>
+		<column name="description" type="String"></column>
+		<column name="thumbnail" type="Blob"></column>
+		<column name="sample" type="Blob"></column>
+		<column name="price" type="String"></column>
+
+		<!-- Finder -->
+		<finder return-type="Collection" name="Author">
+			<finder-column name="author"></finder-column>
+		</finder>
+		<finder name="ISBN" return-type="Book" unique="true">
+			<finder-column name="ISBN"></finder-column>
+		</finder>
+
+		<!-- Reference -->
+		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry"></reference>
+		<reference package-path="com.liferay.portlet.asset" entity="AssetLink"></reference>
+	</entity>
+
+	<!--<entity > -->
+	<entity name="Cart" local-service="true" uuid="true" remote-service="false">
+
+		<!-- PK fields -->
+		<column name="cartId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+		<column name="companyId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+
+		<!-- Data fields -->
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="bookId" type="long"></column>
+		<column name="quantity" type="int"></column>
+
+		<!-- Finder -->
+		<finder return-type="Collection" name="UserId">
+			<finder-column name="userId"></finder-column>
+		</finder>
+		<finder name="BookId" return-type="Cart" unique="true">
+			<finder-column name="userId"></finder-column>
+			<finder-column name="bookId"></finder-column>
+		</finder>
+	</entity>
+
+	<!--<entity > -->
+	<entity name="BookOrder" local-service="true" uuid="true" remote-service="false">
+
+		<!-- PK fields -->
+		<column name="bookOrderId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+		<column name="companyId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+
+		<!-- Data fields -->
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="status" type="String"></column>
+
+		<column name="billingName" type="String"></column>
+		<column name="billingCountry" type="String"></column>
+		<column name="billingCity" type="String"></column>
+		<column name="billingPrefecture" type="String"></column>
+		<column name="billingStreet" type="String"></column>
+		<column name="billingZip" type="String"></column>
+		<column name="shipToBilling" type="boolean"></column>
+
+		<column name="shippingName" type="String"></column>
+		<column name="shippingCountry" type="String"></column>
+		<column name="shippingCity" type="String"></column>
+		<column name="shippingPrefecture" type="String"></column>
+		<column name="shippingStreet" type="String"></column>
+		<column name="shippingZip" type="String"></column>
+		<column name="phone" type="String"></column>
+
+		<column name="total" type="String"></column>
+		<column name="tax" type="int"></column>
+		<column name="discount" type="int"></column>
+		<column name="shipfee" type="String"></column>
+		<column name="payment" type="String"></column>
+
+		<!-- Finder -->
+		<finder return-type="Collection" name="UserId">
+			<finder-column name="userId"></finder-column>
+		</finder>
+		<finder return-type="Collection" name="ModifiedDate">
+			<finder-column name="modifiedDate"></finder-column>
+		</finder>
+	</entity>
+
+	<!--<entity > -->
+	<entity name="OrderItem" local-service="true" uuid="true" remote-service="false">
+
+		<!-- PK fields -->
+		<column name="orderItemId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+		<column name="companyId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+
+		<!-- Data fields -->
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="bookOrderId" type="long"></column>
+		<column name="bookId" type="long"></column>
+		<column name="price" type="String"></column>
+		<column name="quantity" type="int"></column>
+
+		<!-- Finder -->
+		<finder return-type="Collection" name="OrderId">
+			<finder-column name="bookOrderId"></finder-column>
+		</finder>
+		<finder return-type="Collection" name="BookId">
+			<finder-column name="bookId"></finder-column>
+		</finder>
+		<finder return-type="Collection" name="UserId">
+			<finder-column name="userId"></finder-column>
+		</finder>
+		<finder return-type="OrderItem" name="OrderItem" unique="true">
+			<finder-column name="bookOrderId"></finder-column>
+			<finder-column name="bookId"></finder-column>
+		</finder>
+	</entity>
+
+	<!--<entity > -->
+	<entity name="Address" uuid="true" trash-enabled="true" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+		<column name="addressId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+		<column name="companyId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+
+		<!-- Data fields -->
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="name" type="String"></column>
+		<column name="phone" type="String"></column>
+		<column name="country" type="String"></column>
+		<column name="city" type="String"></column>
+		<column name="prefecture" type="String"></column>
+		<column name="street" type="String"></column>
+		<column name="zip" type="String"></column>
+		<column name="primary" type="boolean"></column>
+
+		<!-- Finder -->
+		<finder return-type="Collection" name="UserID">
+			<finder-column name="userId"></finder-column>
+		</finder>
+		<finder return-type="Address" name="PrimaryAddress" unique="true">
+			<finder-column name="userId"></finder-column>
+			<finder-column name="primary"></finder-column>
+		</finder>
+	</entity>
+
+	<exceptions>
+		<exception>StoreName</exception>
+		<exception>StoreAddress</exception>
+		<exception>StorePhone</exception>
+		<exception>StockBook</exception>
+		<exception>StockQuantity</exception>
+		<exception>BookISBN</exception>
+		<exception>BookTitle</exception>
+		<exception>BookPrice</exception>
+		<exception>CartUserId</exception>
+		<exception>CartBookId</exception>
+		<exception>OrderUserId</exception>
+		<exception>OrderBillingAddress</exception>
+		<exception>OrderShippingAddress</exception>
+		<exception>OrderItemBook</exception>
+		<exception>OrderItemQuantity</exception>
+		<exception>DuplicateAddress</exception>
+		<exception>Address</exception>
+	</exceptions>
+</service-builder>

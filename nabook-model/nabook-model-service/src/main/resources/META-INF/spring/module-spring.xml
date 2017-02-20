@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.nabook.service.impl.AddressLocalServiceImpl" id="com.nabook.service.AddressLocalService" />
+	<bean class="com.nabook.service.persistence.impl.AddressPersistenceImpl" id="com.nabook.service.persistence.AddressPersistence" parent="basePersistence" />
+	<bean class="com.nabook.service.impl.BookLocalServiceImpl" id="com.nabook.service.BookLocalService" />
+	<bean class="com.nabook.service.persistence.impl.BookPersistenceImpl" id="com.nabook.service.persistence.BookPersistence" parent="basePersistence" />
+	<bean class="com.nabook.service.impl.BookOrderLocalServiceImpl" id="com.nabook.service.BookOrderLocalService" />
+	<bean class="com.nabook.service.persistence.impl.BookOrderPersistenceImpl" id="com.nabook.service.persistence.BookOrderPersistence" parent="basePersistence" />
+	<bean class="com.nabook.service.impl.BookstoreLocalServiceImpl" id="com.nabook.service.BookstoreLocalService" />
+	<bean class="com.nabook.service.persistence.impl.BookstorePersistenceImpl" id="com.nabook.service.persistence.BookstorePersistence" parent="basePersistence" />
+	<bean class="com.nabook.service.impl.CartLocalServiceImpl" id="com.nabook.service.CartLocalService" />
+	<bean class="com.nabook.service.persistence.impl.CartPersistenceImpl" id="com.nabook.service.persistence.CartPersistence" parent="basePersistence" />
+	<bean class="com.nabook.service.impl.OrderItemLocalServiceImpl" id="com.nabook.service.OrderItemLocalService" />
+	<bean class="com.nabook.service.persistence.impl.OrderItemPersistenceImpl" id="com.nabook.service.persistence.OrderItemPersistence" parent="basePersistence" />
+	<bean class="com.nabook.service.impl.StockItemLocalServiceImpl" id="com.nabook.service.StockItemLocalService" />
+	<bean class="com.nabook.service.persistence.impl.StockItemPersistenceImpl" id="com.nabook.service.persistence.StockItemPersistence" parent="basePersistence" />
+</beans>

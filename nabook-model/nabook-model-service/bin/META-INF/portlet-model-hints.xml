@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.nabook.model.Address">
+		<field name="uuid" type="String" />
+		<field name="addressId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="name" type="String" />
+		<field name="phone" type="String" />
+		<field name="country" type="String" />
+		<field name="city" type="String" />
+		<field name="prefecture" type="String" />
+		<field name="street" type="String" />
+		<field name="zip" type="String" />
+		<field name="primary" type="boolean" />
+	</model>
+	<model name="com.nabook.model.Book">
+		<field name="uuid" type="String" />
+		<field name="bookId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="ISBN" type="String" />
+		<field name="title" type="String" />
+		<field name="subtitle" type="String" />
+		<field name="edition" type="String" />
+		<field name="volume" type="String" />
+		<field name="author" type="String" />
+		<field name="publisher" type="String" />
+		<field name="pubDate" type="Date" />
+		<field name="description" type="String" />
+		<field name="thumbnail" type="Blob" />
+		<field name="sample" type="Blob" />
+		<field name="price" type="String" />
+	</model>
+	<model name="com.nabook.model.BookOrder">
+		<field name="uuid" type="String" />
+		<field name="bookOrderId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="status" type="String" />
+		<field name="billingName" type="String" />
+		<field name="billingCountry" type="String" />
+		<field name="billingCity" type="String" />
+		<field name="billingPrefecture" type="String" />
+		<field name="billingStreet" type="String" />
+		<field name="billingZip" type="String" />
+		<field name="shipToBilling" type="boolean" />
+		<field name="shippingName" type="String" />
+		<field name="shippingCountry" type="String" />
+		<field name="shippingCity" type="String" />
+		<field name="shippingPrefecture" type="String" />
+		<field name="shippingStreet" type="String" />
+		<field name="shippingZip" type="String" />
+		<field name="phone" type="String" />
+		<field name="total" type="String" />
+		<field name="tax" type="int" />
+		<field name="discount" type="int" />
+		<field name="shipfee" type="String" />
+		<field name="payment" type="String" />
+	</model>
+	<model name="com.nabook.model.Bookstore">
+		<field name="uuid" type="String" />
+		<field name="bookstoreId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" />
+		<field name="country" type="String" />
+		<field name="city" type="String" />
+		<field name="prefecture" type="String" />
+		<field name="street" type="String" />
+		<field name="zip" type="String" />
+		<field name="phone" type="String" />
+	</model>
+	<model name="com.nabook.model.Cart">
+		<field name="uuid" type="String" />
+		<field name="cartId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="bookId" type="long" />
+		<field name="quantity" type="int" />
+	</model>
+	<model name="com.nabook.model.OrderItem">
+		<field name="uuid" type="String" />
+		<field name="orderItemId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="bookOrderId" type="long" />
+		<field name="bookId" type="long" />
+		<field name="price" type="String" />
+		<field name="quantity" type="int" />
+	</model>
+	<model name="com.nabook.model.StockItem">
+		<field name="uuid" type="String" />
+		<field name="stockItemId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="bookId" type="long" />
+		<field name="remainingQuantity" type="int" />
+	</model>
+</model-hints>

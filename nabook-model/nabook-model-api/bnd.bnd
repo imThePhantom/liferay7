@@ -1,0 +1,9 @@
+Bundle-Name: nabook-model-api
+Bundle-SymbolicName: com.nabook.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.nabook.exception,\
+	com.nabook.model,\
+	com.nabook.service,\
+	com.nabook.service.persistence
+-includeresource: META-INF/service.xml=../nabook-model-service/service.xml
