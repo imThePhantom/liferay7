@@ -1,0 +1,249 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<hint-collection name="TEXT">
+		<hint name="max-length">50</hint>
+		<hint name="display-width">50</hint>
+	</hint-collection>
+	<hint-collection name="STRING">
+		<hint name="max-length">255</hint>
+		<hint name="display-width">255</hint>
+	</hint-collection>
+	<hint-collection name="TEXT_AREA">
+		<hint name="max-length">1000</hint>
+		<hint name="display-width">350</hint>
+	</hint-collection>
+	<hint-collection name="BIG_DECIMAL">
+		<hint name="max-length">12</hint>
+		<hint name="display-width">12</hint>
+	</hint-collection>
+	<model name="com.nabook.model.Address">
+		<field name="uuid" type="String" />
+		<field name="addressId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="name" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="phone" type="String">
+			<hint name="display-width">50</hint>
+		</field>
+		<field name="country" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="city" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="prefecture" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="street" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="zip" type="String">
+			<hint name="display-width">50</hint>
+		</field>
+		<field name="primary" type="boolean" />
+	</model>
+	<model name="com.nabook.model.Author">
+		<field name="uuid" type="String" />
+		<field name="authorId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="fullName" type="String" />
+		<field name="profile" type="String" />
+	</model>
+	<model name="com.nabook.model.Book">
+		<field name="uuid" type="String" />
+		<field name="bookId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="ISBN" type="String">
+			<hint name="display-width">50</hint>
+		</field>
+		<field name="title" type="String">
+			<hint-collection name="STRING" />
+		</field>
+		<field name="subtitle" type="String">
+			<hint-collection name="STRING" />
+		</field>
+		<field name="edition" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="volume" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="publisher" type="String">
+			<hint-collection name="STRING" />
+		</field>
+		<field name="pubDate" type="Date" />
+		<field name="price" type="String">
+			<hint-collection name="BIG_DECIMAL" />
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXT_AREA" />
+		</field>
+		<field name="thumbnail" type="Blob" />
+		<field name="sample" type="Blob" />
+	</model>
+	<model name="com.nabook.model.BookOrder">
+		<field name="uuid" type="String" />
+		<field name="bookOrderId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="status" type="String">
+			<hint name="display-width">50</hint>
+		</field>
+		<field name="billingName" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="billingCountry" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="billingCity" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="billingPrefecture" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="billingStreet" type="String">
+			<hint-collection name="STRING" />
+		</field>
+		<field name="billingZip" type="String">
+			<hint name="display-width">50</hint>
+		</field>
+		<field name="shipToBilling" type="boolean" />
+		<field name="shippingName" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="shippingCountry" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="shippingCity" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="shippingPrefecture" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="shippingStreet" type="String">
+			<hint-collection name="STRING" />
+		</field>
+		<field name="shippingZip" type="String">
+			<hint name="display-width">50</hint>
+		</field>
+		<field name="phone" type="String">
+			<hint name="display-width">50</hint>
+		</field>
+		<field name="total" type="String">
+			<hint-collection name="BIG_DECIMAL" />
+		</field>
+		<field name="tax" type="int">
+			<hint name="display-width">50</hint>
+		</field>
+		<field name="discount" type="int">
+			<hint name="display-width">50</hint>
+		</field>
+		<field name="shipfee" type="String">
+			<hint-collection name="BIG_DECIMAL" />
+		</field>
+		<field name="payment" type="String">
+			<hint-collection name="BIG_DECIMAL" />
+		</field>
+	</model>
+	<model name="com.nabook.model.Bookstore">
+		<field name="uuid" type="String" />
+		<field name="bookstoreId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="name" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="country" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="city" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="prefecture" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="street" type="String">
+			<hint-collection name="STRING" />
+		</field>
+		<field name="zip" type="String">
+			<hint name="display-width">50</hint>
+		</field>
+		<field name="phone" type="String">
+			<hint name="display-width">50</hint>
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXT_AREA" />
+		</field>
+	</model>
+	<model name="com.nabook.model.Cart">
+		<field name="uuid" type="String" />
+		<field name="cartId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="bookId" type="long" />
+		<field name="quantity" type="int">
+			<hint name="display-width">50</hint>
+		</field>
+	</model>
+	<model name="com.nabook.model.OrderItem">
+		<field name="uuid" type="String" />
+		<field name="orderItemId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="bookOrderId" type="long" />
+		<field name="bookId" type="long" />
+		<field name="price" type="String">
+			<hint-collection name="BIG_DECIMAL" />
+		</field>
+		<field name="quantity" type="int">
+			<hint name="display-width">50</hint>
+		</field>
+	</model>
+	<model name="com.nabook.model.StockItem">
+		<field name="uuid" type="String" />
+		<field name="stockItemId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="bookId" type="long" />
+		<field name="remainingQuantity" type="int">
+			<hint name="display-width">50</hint>
+		</field>
+	</model>
+</model-hints>
