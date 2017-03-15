@@ -13,8 +13,8 @@ import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
 	property = {
 			"resource.name=" + NabookResourcePermissionChecker.RESOURCE_NAME
 	},
-	service = ResourcePermissionChecker.class)
-
+	service = ResourcePermissionChecker.class
+)
 public class NabookResourcePermissionChecker extends BaseResourcePermissionChecker {
 	public static final String RESOURCE_NAME = "com.nabook";
 	

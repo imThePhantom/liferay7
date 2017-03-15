@@ -33,7 +33,6 @@ public class NabookFriendlyURLMapper extends DefaultFriendlyURLMapper {
 
 	@Override
 	public String getMapping() {
-
 		return _MAPPING;
 	}
 

@@ -1,30 +1,20 @@
 {
   "ecmaVersion": 5,
+  "libs": [
+    "browser"
+  ],
   "plugins": {
-    "guess-types": {
-      
-    },
-    "outline": {
-      
-    },
     "yui3": {
       
     },
     "liferay": {
       
     },
-    "ckeditor4.4.x": {
+    "bootstrap": {
       
     },
     "aui1.5.x": {
       
-    },
-    "bootstrap": {
-      
     }
-  },
-  "libs": [
-    "browser",
-    "jquery"
-  ]
+  }
 }

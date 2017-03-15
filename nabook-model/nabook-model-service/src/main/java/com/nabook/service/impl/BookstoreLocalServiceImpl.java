@@ -161,6 +161,45 @@ public class BookstoreLocalServiceImpl extends BookstoreLocalServiceBaseImpl {
 		return bookstorePersistence.findByLocation(country, city, prefecture, start, end);
 	}
 
+	public List<Bookstore> search(long companyId, String keywords) throws SearchException {
+		SearchContext searchContext = new SearchContext();
+
+		Map<String, Serializable> attributes = new HashMap<String, Serializable>();
+		attributes.put("name", keywords);
+		attributes.put("address", keywords);
+		attributes.put("zip", keywords);
+		attributes.put("phone", keywords);
+
+		searchContext.setKeywords(keywords);
+		searchContext.setAttributes(attributes);
+		searchContext.setCompanyId(companyId);
+
+		QueryConfig queryConfig = new QueryConfig();
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setAndSearch(false);
+		searchContext.setQueryConfig(queryConfig);
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Bookstore.class);
+		Hits hits = indexer.search(searchContext);
+
+		List<Bookstore> bookstores = new ArrayList<Bookstore>();
+		for (int i = 0; i < hits.getDocs().length; i++) {
+			Document doc = hits.doc(i);
+			long bookstoreId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+			Bookstore result = null;
+			try {
+				result = BookstoreLocalServiceUtil.getBookstore(bookstoreId);
+			} catch (Exception e) {
+				System.out.println("Cant get store with id " + bookstoreId);
+			}
+			bookstores.add(result);
+		}
+		System.out.println("Result with keyword " + keywords + ":" + bookstores.size());
+		return bookstores;
+	}
+
 	public Bookstore updateBookstore(ServiceContext serviceContext, long userId, long bookstoreId, String name,
 			String country, String city, String prefecture, String street, String zip, String phone, String description)
 			throws SystemException, PortalException {
@@ -223,45 +262,6 @@ public class BookstoreLocalServiceImpl extends BookstoreLocalServiceBaseImpl {
 		if (Validator.isNull(phone) || !Validator.isPhoneNumber(phone)) {
 			throw new StorePhoneException("Store's phone number consist of only digits.");
 		}
-	}
-
-	public List<Bookstore> search(long companyId, String keywords) throws SearchException {
-		SearchContext searchContext = new SearchContext();
-
-		Map<String, Serializable> attributes = new HashMap<String, Serializable>();
-		attributes.put("name", keywords);
-		attributes.put("address", keywords);
-		attributes.put("zip", keywords);
-		attributes.put("phone", keywords);
-
-		searchContext.setKeywords(keywords);
-		searchContext.setAttributes(attributes);
-		searchContext.setCompanyId(companyId);
-
-		QueryConfig queryConfig = new QueryConfig();
-		queryConfig.setHighlightEnabled(false);
-		queryConfig.setScoreEnabled(false);
-
-		searchContext.setAndSearch(false);
-		searchContext.setQueryConfig(queryConfig);
-
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Bookstore.class);
-		Hits hits = indexer.search(searchContext);
-
-		List<Bookstore> bookstores = new ArrayList<Bookstore>();
-		for (int i = 0; i < hits.getDocs().length; i++) {
-			Document doc = hits.doc(i);
-			long bookstoreId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
-			Bookstore result = null;
-			try {
-				result = BookstoreLocalServiceUtil.getBookstore(bookstoreId);
-			} catch (Exception e) {
-				System.out.println("Cant get store with id " + bookstoreId);
-			}
-			bookstores.add(result);
-		}
-		System.out.println("Result with keyword " + keywords + ":" + bookstores.size());
-		return bookstores;
 	}
 
 	private static final Log logger = LogFactoryUtil.getLog(Bookstore.class.getName());

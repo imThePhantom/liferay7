@@ -1,2 +1,4 @@
-<%@ include file="../home.jsp" %>
-<h1>Book</h1>
+<%@ include file="../home.jsp"%>
+
+<liferay-ui:panel title="title.manage.book">
+</liferay-ui:panel>

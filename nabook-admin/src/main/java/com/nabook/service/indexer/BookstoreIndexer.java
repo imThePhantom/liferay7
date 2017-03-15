@@ -18,14 +18,14 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.nabook.admin.constants.NabookAdminConstants;
 import com.nabook.model.Bookstore;
 import com.nabook.service.BookstoreLocalServiceUtil;
+import com.nabook.util.NabookConstants;
 
 @Component(service = Indexer.class)
-public class BookstoreIndexer extends BaseIndexer<Object> {
+public class BookstoreIndexer extends BaseIndexer<Bookstore> {
 	public static final String CLASS_NAME = Bookstore.class.getName();
-	public static final String PORTLET_ID = NabookAdminConstants.PORTLET_NABOOKADMIN;
+	public static final String PORTLET_ID = NabookConstants.PORTLET_NABOOKADMIN;
 
 	public BookstoreIndexer() {
 		setPermissionAware(true);
@@ -37,16 +37,14 @@ public class BookstoreIndexer extends BaseIndexer<Object> {
 	}
 
 	@Override
-	protected void doDelete(Object object) throws Exception {
-		Bookstore bookstore = (Bookstore) object;
+	protected void doDelete(Bookstore bookstore) throws Exception {
 		Document document = getDocument(bookstore);
 		IndexWriterHelperUtil.deleteDocument(getSearchEngineId(), bookstore.getCompanyId(), document.getUID(), true);
 		System.out.println("doDelete for " + bookstore.getName() + " in indexer invoked");
 	}
 
 	@Override
-	protected Document doGetDocument(Object object) throws Exception {
-		Bookstore bookstore = (Bookstore) object;
+	protected Document doGetDocument(Bookstore bookstore) throws Exception {
 		String address = bookstore.getCountry() + ", " + bookstore.getCity() + ", " + bookstore.getPrefecture() + ", "
 				+ bookstore.getStreet();
 
@@ -91,8 +89,7 @@ public class BookstoreIndexer extends BaseIndexer<Object> {
 	}
 
 	@Override
-	protected void doReindex(Object object) throws Exception {
-		Bookstore bookstore = (Bookstore) object;
+	protected void doReindex(Bookstore bookstore) throws Exception {
 		Document document = getDocument(bookstore);
 		IndexWriterHelperUtil.updateDocument(getSearchEngineId(), bookstore.getCompanyId(), document, true);
 		System.out.println("Reindex " + bookstore.getName());

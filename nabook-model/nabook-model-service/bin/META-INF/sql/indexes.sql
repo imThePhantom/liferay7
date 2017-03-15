@@ -19,8 +19,8 @@ create index IX_CBDDA983 on nab_Books_Authors (authorId);
 create index IX_76F8DAA1 on nab_Books_Authors (bookId);
 create index IX_6841013F on nab_Books_Authors (companyId);
 
-create unique index IX_CC6836F7 on nab_Bookstore (country[$COLUMN_LENGTH:50$], city[$COLUMN_LENGTH:50$], prefecture[$COLUMN_LENGTH:50$], street[$COLUMN_LENGTH:255$]);
-create unique index IX_4CDF434D on nab_Bookstore (name[$COLUMN_LENGTH:50$]);
+create unique index IX_CC6836F7 on nab_Bookstore (country[$COLUMN_LENGTH:80$], city[$COLUMN_LENGTH:80$], prefecture[$COLUMN_LENGTH:80$], street[$COLUMN_LENGTH:255$]);
+create unique index IX_4CDF434D on nab_Bookstore (name[$COLUMN_LENGTH:80$]);
 create unique index IX_C4E8AED0 on nab_Bookstore (phone[$COLUMN_LENGTH:75$]);
 create index IX_4E989082 on nab_Bookstore (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_76AF4F84 on nab_Bookstore (uuid_[$COLUMN_LENGTH:75$], groupId);

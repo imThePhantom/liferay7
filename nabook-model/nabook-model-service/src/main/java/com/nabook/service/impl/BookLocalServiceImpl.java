@@ -16,9 +16,13 @@ package com.nabook.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import java.io.Serializable;
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
@@ -28,13 +32,19 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.nabook.exception.BookAuthorException;
 import com.nabook.exception.BookISBNException;
 import com.nabook.exception.BookPriceException;
 import com.nabook.exception.BookPublisherException;
@@ -72,11 +82,11 @@ public class BookLocalServiceImpl extends BookLocalServiceBaseImpl {
 	 */
 
 	public Book addBook(ServiceContext serviceContext, long userId, String isbn, String title, String subtitle,
-			String edition, String volume, String author, String publisher, Date pubDate, String price,
+			String edition, String volume, String publisher, Date pubDate, String price,
 			String description, Blob thumbnail, Blob sample) throws SystemException, PortalException {
 		logger.info("Start create book: " + title);
 
-		validate(isbn, subtitle, author, publisher, price);
+		validate(isbn, subtitle, publisher, price);
 		checkDuplicate(isbn);
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -126,6 +136,10 @@ public class BookLocalServiceImpl extends BookLocalServiceBaseImpl {
 		logger.info("CREATE book " + title + " successful.");
 		return book;
 	}
+	
+	public int countAllBook() throws SystemException, NoSuchBookException {
+		return bookPersistence.countAll();
+	}
 
 	public Book deleteBook(long bookId) throws SystemException, PortalException {
 		Book book = getBook(bookId);
@@ -156,13 +170,51 @@ public class BookLocalServiceImpl extends BookLocalServiceBaseImpl {
 	public List<Book> getAllBooks(int start, int end) throws SystemException, NoSuchBookException {
 		return bookPersistence.findAll(start, end);
 	}
+	
+	public List<Book> search(long companyId, String keywords) throws SearchException {
+		SearchContext searchContext = new SearchContext();
+
+		Map<String, Serializable> attributes = new HashMap<String, Serializable>();
+		attributes.put("ISBN", keywords);
+		attributes.put("title", keywords);
+		attributes.put("publisher", keywords);
+
+		searchContext.setKeywords(keywords);
+		searchContext.setAttributes(attributes);
+		searchContext.setCompanyId(companyId);
+
+		QueryConfig queryConfig = new QueryConfig();
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		searchContext.setAndSearch(false);
+		searchContext.setQueryConfig(queryConfig);
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(Book.class);
+		Hits hits = indexer.search(searchContext);
+
+		List<Book> books = new ArrayList<Book>();
+		for (int i = 0; i < hits.getDocs().length; i++) {
+			Document doc = hits.doc(i);
+			long bookId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+			Book result = null;
+			try {
+				result = getBook(bookId);
+			} catch (Exception e) {
+				System.out.println("Cant get store with id " + bookId);
+			}
+			books.add(result);
+		}
+		System.out.println("Result with keyword " + keywords + ":" + books.size());
+		return books;
+	}
 
 	public Book updateBook(ServiceContext serviceContext, long userId, long bookId, String isbn, String title,
-			String subtitle, String edition, String volume, String author, String publisher, Date pubDate, String price,
+			String subtitle, String edition, String volume, String publisher, Date pubDate, String price,
 			String description, Blob thumbnail, Blob sample) throws SystemException, PortalException {
 		logger.info("Start update book:" + title);
 
-		validate(isbn, subtitle, author, publisher, price);
+		validate(isbn, subtitle, publisher, price);
 
 		Book book = getBook(bookId);
 		Date now = new Date();
@@ -204,16 +256,13 @@ public class BookLocalServiceImpl extends BookLocalServiceBaseImpl {
 		}
 	}
 
-	private void validate(String isbn, String title, String author, String publisher, String price)
+	private void validate(String isbn, String title, String publisher, String price)
 			throws PortalException {
 		if (Validator.isNull(isbn)) {
 			throw new BookISBNException("Book's ISBN can not be blank.");
 		}
 		if (Validator.isNull(title)) {
 			throw new BookTitleException("Book's title can not be blank.");
-		}
-		if (Validator.isNull(author)) {
-			throw new BookAuthorException("Author can not be blank.");
 		}
 		if (Validator.isNull(publisher)) {
 			throw new BookPublisherException("Publisher can not be blank.");

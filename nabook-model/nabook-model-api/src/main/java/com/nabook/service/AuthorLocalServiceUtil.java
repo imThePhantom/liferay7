@@ -81,6 +81,14 @@ public class AuthorLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.nabook.model.Author addAuthor(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		long userId, java.lang.String fullName, java.lang.String profile)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addAuthor(serviceContext, userId, fullName, profile);
+	}
+
 	/**
 	* Adds the author to the database. Also notifies the appropriate model listeners.
 	*
@@ -119,9 +127,11 @@ public class AuthorLocalServiceUtil {
 	* @param authorId the primary key of the author
 	* @return the author that was removed
 	* @throws PortalException if a author with the primary key could not be found
+	* @throws SystemException
 	*/
 	public static com.nabook.model.Author deleteAuthor(long authorId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService().deleteAuthor(authorId);
 	}
 
@@ -167,6 +177,17 @@ public class AuthorLocalServiceUtil {
 		return getService().getAuthorByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.nabook.model.Author updateAuthor(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		long userId, long authorId, java.lang.String fullName,
+		java.lang.String profile)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateAuthor(serviceContext, userId, authorId, fullName,
+			profile);
+	}
+
 	/**
 	* Updates the author in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -176,6 +197,12 @@ public class AuthorLocalServiceUtil {
 	public static com.nabook.model.Author updateAuthor(
 		com.nabook.model.Author author) {
 		return getService().updateAuthor(author);
+	}
+
+	public static int countAllAuthor()
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.nabook.exception.NoSuchAuthorException {
+		return getService().countAllAuthor();
 	}
 
 	/**
@@ -250,6 +277,19 @@ public class AuthorLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<com.nabook.model.Author> getAllAuthors()
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.nabook.exception.NoSuchAuthorException {
+		return getService().getAllAuthors();
+	}
+
+	public static java.util.List<com.nabook.model.Author> getAllAuthors(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.nabook.exception.NoSuchAuthorException {
+		return getService().getAllAuthors(start, end);
+	}
+
 	/**
 	* Returns a range of all the authors.
 	*
@@ -310,6 +350,20 @@ public class AuthorLocalServiceUtil {
 		long bookId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.nabook.model.Author> orderByComparator) {
 		return getService().getBookAuthors(bookId, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.nabook.model.Book> getBooksByAuthor(
+		long authorId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.nabook.exception.NoSuchAuthorException,
+			com.nabook.exception.NoSuchBookException {
+		return getService().getBooksByAuthor(authorId);
+	}
+
+	public static java.util.List<com.nabook.model.Author> search(
+		long companyId, java.lang.String keywords)
+		throws com.liferay.portal.kernel.search.SearchException {
+		return getService().search(companyId, keywords);
 	}
 
 	/**

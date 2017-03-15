@@ -28,14 +28,20 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import com.nabook.exception.NoSuchAuthorException;
+import com.nabook.exception.NoSuchBookException;
+
 import com.nabook.model.Author;
+import com.nabook.model.Book;
 
 import java.io.Serializable;
 
@@ -93,6 +99,10 @@ public interface AuthorLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public Author addAuthor(ServiceContext serviceContext, long userId,
+		java.lang.String fullName, java.lang.String profile)
+		throws PortalException, SystemException;
+
 	/**
 	* Adds the author to the database. Also notifies the appropriate model listeners.
 	*
@@ -125,9 +135,11 @@ public interface AuthorLocalService extends BaseLocalService,
 	* @param authorId the primary key of the author
 	* @return the author that was removed
 	* @throws PortalException if a author with the primary key could not be found
+	* @throws SystemException
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public Author deleteAuthor(long authorId) throws PortalException;
+	public Author deleteAuthor(long authorId)
+		throws PortalException, SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Author fetchAuthor(long authorId);
@@ -165,6 +177,10 @@ public interface AuthorLocalService extends BaseLocalService,
 	public Author getAuthorByUuidAndGroupId(java.lang.String uuid, long groupId)
 		throws PortalException;
 
+	public Author updateAuthor(ServiceContext serviceContext, long userId,
+		long authorId, java.lang.String fullName, java.lang.String profile)
+		throws PortalException, SystemException;
+
 	/**
 	* Updates the author in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -173,6 +189,8 @@ public interface AuthorLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public Author updateAuthor(Author author);
+
+	public int countAllAuthor() throws SystemException, NoSuchAuthorException;
 
 	/**
 	* Returns the number of authors.
@@ -231,6 +249,14 @@ public interface AuthorLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Author> getAllAuthors()
+		throws SystemException, NoSuchAuthorException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Author> getAllAuthors(int start, int end)
+		throws SystemException, NoSuchAuthorException;
+
 	/**
 	* Returns a range of all the authors.
 	*
@@ -280,6 +306,14 @@ public interface AuthorLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Author> getBookAuthors(long bookId, int start, int end,
 		OrderByComparator<Author> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Book> getBooksByAuthor(long authorId)
+		throws SystemException, NoSuchAuthorException, NoSuchBookException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Author> search(long companyId, java.lang.String keywords)
+		throws SearchException;
 
 	/**
 	* Returns the number of rows matching the dynamic query.

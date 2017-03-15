@@ -15,8 +15,13 @@
 			<supports>
 				<action-key>VIEW</action-key>
 				<action-key>PERMISSIONS</action-key>
+				<action-key>ADD_AUTHOR</action-key>
 				<action-key>ADD_BOOK</action-key>
 				<action-key>ADD_BOOKSTORE</action-key>
+				<action-key>MANAGE_STOCK</action-key>
+				<action-key>ADD_CART</action-key>
+				<action-key>ADD_ORDER</action-key>
+				<action-key>ADD_ADDRESS</action-key>
 			</supports>
 			<site-member-defaults>
 				<action-key>PERMISSIONS</action-key>
@@ -31,7 +36,35 @@
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
-
+	
+	<model-resource>
+		<model-name>com.nabook.model.Author</model-name>
+		<portlet-ref>
+			<portlet-name>NABookAdmin</portlet-name>
+			<portlet-name>NABook</portlet-name>
+		</portlet-ref>
+		<weight>2</weight>
+		<permissions>
+			<supports>
+				<action-key>VIEW</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>DELETE</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>VIEW</action-key>
+				<action-key>UPDATE</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>UPDATE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>DELETE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
 	<model-resource>
 		<model-name>com.nabook.model.Book</model-name>
 		<portlet-ref>
@@ -41,13 +74,12 @@
 		<weight>2</weight>
 		<permissions>
 			<supports>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>DELETE</action-key>
 			</supports>
 			<site-member-defaults>
-				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</site-member-defaults>
@@ -77,7 +109,6 @@
 				<action-key>DELETE</action-key>
 			</supports>
 			<site-member-defaults>
-				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</site-member-defaults>

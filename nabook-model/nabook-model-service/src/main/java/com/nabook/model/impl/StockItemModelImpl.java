@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -36,13 +37,16 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import com.nabook.model.StockItem;
 import com.nabook.model.StockItemModel;
+import com.nabook.model.StockItemSoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +62,7 @@ import java.util.Map;
  * @see StockItemModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class StockItemModelImpl extends BaseModelImpl<StockItem>
 	implements StockItemModel {
@@ -115,6 +120,54 @@ public class StockItemModelImpl extends BaseModelImpl<StockItem>
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
 	public static final long UUID_COLUMN_BITMASK = 8L;
 	public static final long STOCKITEMID_COLUMN_BITMASK = 16L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static StockItem toModel(StockItemSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		StockItem model = new StockItemImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setStockItemId(soapModel.getStockItemId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setBookId(soapModel.getBookId());
+		model.setRemainingQuantity(soapModel.getRemainingQuantity());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<StockItem> toModels(StockItemSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<StockItem> models = new ArrayList<StockItem>(soapModels.length);
+
+		for (StockItemSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.nabook.service.util.ServiceProps.get(
 				"lock.expiration.time.com.nabook.model.StockItem"));
 
@@ -235,6 +288,7 @@ public class StockItemModelImpl extends BaseModelImpl<StockItem>
 		}
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -258,6 +312,7 @@ public class StockItemModelImpl extends BaseModelImpl<StockItem>
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getStockItemId() {
 		return _stockItemId;
@@ -268,6 +323,7 @@ public class StockItemModelImpl extends BaseModelImpl<StockItem>
 		_stockItemId = stockItemId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -290,6 +346,7 @@ public class StockItemModelImpl extends BaseModelImpl<StockItem>
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -312,6 +369,7 @@ public class StockItemModelImpl extends BaseModelImpl<StockItem>
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -322,6 +380,7 @@ public class StockItemModelImpl extends BaseModelImpl<StockItem>
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -338,6 +397,7 @@ public class StockItemModelImpl extends BaseModelImpl<StockItem>
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -364,6 +424,7 @@ public class StockItemModelImpl extends BaseModelImpl<StockItem>
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -379,6 +440,7 @@ public class StockItemModelImpl extends BaseModelImpl<StockItem>
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public long getBookId() {
 		return _bookId;
@@ -401,6 +463,7 @@ public class StockItemModelImpl extends BaseModelImpl<StockItem>
 		return _originalBookId;
 	}
 
+	@JSON
 	@Override
 	public int getRemainingQuantity() {
 		return _remainingQuantity;

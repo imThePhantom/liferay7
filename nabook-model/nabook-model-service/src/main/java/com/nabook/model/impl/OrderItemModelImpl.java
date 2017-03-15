@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -36,13 +37,16 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import com.nabook.model.OrderItem;
 import com.nabook.model.OrderItemModel;
+import com.nabook.model.OrderItemSoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +62,7 @@ import java.util.Map;
  * @see OrderItemModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class OrderItemModelImpl extends BaseModelImpl<OrderItem>
 	implements OrderItemModel {
@@ -121,6 +126,56 @@ public class OrderItemModelImpl extends BaseModelImpl<OrderItem>
 	public static final long USERID_COLUMN_BITMASK = 16L;
 	public static final long UUID_COLUMN_BITMASK = 32L;
 	public static final long ORDERITEMID_COLUMN_BITMASK = 64L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static OrderItem toModel(OrderItemSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		OrderItem model = new OrderItemImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setOrderItemId(soapModel.getOrderItemId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setBookOrderId(soapModel.getBookOrderId());
+		model.setBookId(soapModel.getBookId());
+		model.setPrice(soapModel.getPrice());
+		model.setQuantity(soapModel.getQuantity());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<OrderItem> toModels(OrderItemSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<OrderItem> models = new ArrayList<OrderItem>(soapModels.length);
+
+		for (OrderItemSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.nabook.service.util.ServiceProps.get(
 				"lock.expiration.time.com.nabook.model.OrderItem"));
 
@@ -255,6 +310,7 @@ public class OrderItemModelImpl extends BaseModelImpl<OrderItem>
 		}
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -278,6 +334,7 @@ public class OrderItemModelImpl extends BaseModelImpl<OrderItem>
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getOrderItemId() {
 		return _orderItemId;
@@ -288,6 +345,7 @@ public class OrderItemModelImpl extends BaseModelImpl<OrderItem>
 		_orderItemId = orderItemId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -310,6 +368,7 @@ public class OrderItemModelImpl extends BaseModelImpl<OrderItem>
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -332,6 +391,7 @@ public class OrderItemModelImpl extends BaseModelImpl<OrderItem>
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -342,6 +402,7 @@ public class OrderItemModelImpl extends BaseModelImpl<OrderItem>
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -358,6 +419,7 @@ public class OrderItemModelImpl extends BaseModelImpl<OrderItem>
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -396,6 +458,7 @@ public class OrderItemModelImpl extends BaseModelImpl<OrderItem>
 		return _originalUserId;
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -411,6 +474,7 @@ public class OrderItemModelImpl extends BaseModelImpl<OrderItem>
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public long getBookOrderId() {
 		return _bookOrderId;
@@ -433,6 +497,7 @@ public class OrderItemModelImpl extends BaseModelImpl<OrderItem>
 		return _originalBookOrderId;
 	}
 
+	@JSON
 	@Override
 	public long getBookId() {
 		return _bookId;
@@ -455,6 +520,7 @@ public class OrderItemModelImpl extends BaseModelImpl<OrderItem>
 		return _originalBookId;
 	}
 
+	@JSON
 	@Override
 	public String getPrice() {
 		if (_price == null) {
@@ -470,6 +536,7 @@ public class OrderItemModelImpl extends BaseModelImpl<OrderItem>
 		_price = price;
 	}
 
+	@JSON
 	@Override
 	public int getQuantity() {
 		return _quantity;

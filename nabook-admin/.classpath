@@ -12,10 +12,10 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
-	<classpathentry kind="lib" path="D:/Unisrv/liferayIDE/liferay-ce-portal-7.0-ga3/tomcat-8.0.32/webapps/ROOT/WEB-INF/lib/util-bridges.jar"/>
-	<classpathentry kind="lib" path="D:/Unisrv/liferayIDE/liferay-ce-portal-7.0-ga3/tomcat-8.0.32/webapps/ROOT/WEB-INF/lib/util-java.jar"/>
-	<classpathentry kind="lib" path="D:/Unisrv/liferayIDE/liferay-ce-portal-7.0-ga3/tomcat-8.0.32/webapps/ROOT/WEB-INF/lib/util-taglib.jar"/>
-	<classpathentry kind="lib" path="D:/Unisrv/liferayIDE/liferay-ce-portal-7.0-ga3/tomcat-8.0.32/webapps/ROOT/WEB-INF/lib/jstl-api.jar"/>
-	<classpathentry kind="lib" path="D:/Unisrv/liferayIDE/liferay-ce-portal-7.0-ga3/tomcat-8.0.32/webapps/ROOT/WEB-INF/lib/jstl-impl.jar"/>
+	<classpathentry kind="lib" path="D:/Unisrv/liferayIDE/liferay7.0/liferay-ce-portal-7.0-ga3/tomcat-8.0.32/webapps/ROOT/WEB-INF/lib/jstl-api.jar"/>
+	<classpathentry kind="lib" path="D:/Unisrv/liferayIDE/liferay7.0/liferay-ce-portal-7.0-ga3/tomcat-8.0.32/webapps/ROOT/WEB-INF/lib/jstl-impl.jar"/>
+	<classpathentry kind="lib" path="D:/Unisrv/liferayIDE/liferay7.0/liferay-ce-portal-7.0-ga3/tomcat-8.0.32/webapps/ROOT/WEB-INF/lib/util-bridges.jar"/>
+	<classpathentry kind="lib" path="D:/Unisrv/liferayIDE/liferay7.0/liferay-ce-portal-7.0-ga3/tomcat-8.0.32/webapps/ROOT/WEB-INF/lib/util-java.jar"/>
+	<classpathentry kind="lib" path="D:/Unisrv/liferayIDE/liferay7.0/liferay-ce-portal-7.0-ga3/tomcat-8.0.32/webapps/ROOT/WEB-INF/lib/util-taglib.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

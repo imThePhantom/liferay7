@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -104,10 +105,9 @@ public interface BookLocalService extends BaseLocalService,
 	public Book addBook(ServiceContext serviceContext, long userId,
 		java.lang.String isbn, java.lang.String title,
 		java.lang.String subtitle, java.lang.String edition,
-		java.lang.String volume, java.lang.String author,
-		java.lang.String publisher, Date pubDate, java.lang.String price,
-		java.lang.String description, Blob thumbnail, Blob sample)
-		throws PortalException, SystemException;
+		java.lang.String volume, java.lang.String publisher, Date pubDate,
+		java.lang.String price, java.lang.String description, Blob thumbnail,
+		Blob sample) throws PortalException, SystemException;
 
 	/**
 	* Adds the book to the database. Also notifies the appropriate model listeners.
@@ -184,10 +184,9 @@ public interface BookLocalService extends BaseLocalService,
 	public Book updateBook(ServiceContext serviceContext, long userId,
 		long bookId, java.lang.String isbn, java.lang.String title,
 		java.lang.String subtitle, java.lang.String edition,
-		java.lang.String volume, java.lang.String author,
-		java.lang.String publisher, Date pubDate, java.lang.String price,
-		java.lang.String description, Blob thumbnail, Blob sample)
-		throws PortalException, SystemException;
+		java.lang.String volume, java.lang.String publisher, Date pubDate,
+		java.lang.String price, java.lang.String description, Blob thumbnail,
+		Blob sample) throws PortalException, SystemException;
 
 	/**
 	* Updates the book in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -203,6 +202,8 @@ public interface BookLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BookThumbnailBlobModel getThumbnailBlobModel(Serializable primaryKey);
+
+	public int countAllBook() throws SystemException, NoSuchBookException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAuthorBooksCount(long authorId);
@@ -317,6 +318,10 @@ public interface BookLocalService extends BaseLocalService,
 	public List<Book> getBooksByUuidAndCompanyId(java.lang.String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<Book> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Book> search(long companyId, java.lang.String keywords)
+		throws SearchException;
 
 	/**
 	* Returns the number of rows matching the dynamic query.

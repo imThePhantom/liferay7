@@ -17,21 +17,16 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.nabook.admin.constants.NabookAdminConstants;
 import com.nabook.model.Bookstore;
 import com.nabook.service.BookstoreLocalServiceUtil;
+import com.nabook.util.NabookConstants;
 
-@Component(
-	immediate = true,
-	property = {
-			"javax.portlet.name=" + NabookAdminConstants.PORTLET_NABOOKADMIN
-	},
-	service = MVCActionCommand.class
-)
+@Component(immediate = true, property = { "javax.portlet.name=" + NabookConstants.PORTLET_NABOOKADMIN,
+		"mvc.command.name=" + NabookConstants.ACTION_BOOKSTORE, }, service = MVCActionCommand.class)
 
 public class BookstoreActionCommand extends BaseMVCActionCommand {
 
-	public void addBookstore(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
+	protected void addBookstore(ActionRequest request, ActionResponse response) throws SystemException, PortalException {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(Bookstore.class.getName(), request);
 		String name = ParamUtil.getString(request, "name");
 		String country = ParamUtil.getString(request, "country");
@@ -45,17 +40,17 @@ public class BookstoreActionCommand extends BaseMVCActionCommand {
 		try {
 			BookstoreLocalServiceUtil.addBookstore(serviceContext, serviceContext.getUserId(), name, country, city,
 					prefecture, street, zip, phone, description);
-			System.out.println("Add bookstore success");
 			SessionMessages.add(request, "success", "message.success.add.bookstore");
+			response.setRenderParameter("mvcPath", "/bookstore/view.jsp");
 		} catch (Exception e) {
 			logger.error("CREATE store " + name + " failed", e);
 			SessionErrors.add(request, "error", e.getMessage());
 			PortalUtil.copyRequestParameters(request, response);
-			response.setRenderParameter("mvcPath", "/bookstore/update.jsp");
+			response.setRenderParameter("mvcPath", "/bookstore/add.jsp");
 		}
 	}
 
-	public void deleteBookstore(ActionRequest request, ActionResponse response)
+	protected void deleteBookstore(ActionRequest request, ActionResponse response)
 			throws SystemException, PortalException {
 		System.out.println("Method deleteBookstore invoked");
 		long bookstoreId = ParamUtil.getLong(request, "Id");
@@ -63,14 +58,13 @@ public class BookstoreActionCommand extends BaseMVCActionCommand {
 		try {
 			BookstoreLocalServiceUtil.deleteBookstore(bookstoreId);
 			SessionMessages.add(request, "message.success.delete.bookstore");
-			System.out.println("Delete bookstore success");
 		} catch (Exception e) {
-			SessionErrors.add(request, e.getClass(), e);
+			SessionErrors.add(request, "error", e.getMessage());
 			logger.error("DELETE store with id " + bookstoreId + " failed", e);
 		}
 	}
 
-	public void updateBookstore(ActionRequest request, ActionResponse response)
+	protected void updateBookstore(ActionRequest request, ActionResponse response)
 			throws SystemException, PortalException {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(Bookstore.class.getName(), request);
 
@@ -88,8 +82,8 @@ public class BookstoreActionCommand extends BaseMVCActionCommand {
 			try {
 				BookstoreLocalServiceUtil.updateBookstore(serviceContext, serviceContext.getUserId(), bookstoreId, name,
 						country, city, prefecture, street, zip, phone, description);
-				System.out.println("Update bookstore success");
 				SessionMessages.add(request, "success", "message.success.update.bookstore");
+				response.setRenderParameter("mvcPath", "/bookstore/view.jsp");
 			} catch (Exception e) {
 				System.out.println("Exception throwed");
 				SessionMessages.add(request, "error", e.getMessage());
@@ -106,9 +100,21 @@ public class BookstoreActionCommand extends BaseMVCActionCommand {
 	public Log logger = LogFactoryUtil.getLog(Bookstore.class.getName());
 
 	@Override
-	protected void doProcessAction(ActionRequest actionRequest, ActionResponse actionResponse) throws Exception {
-		// TODO Auto-generated method stub
-		
+	protected void doProcessAction(ActionRequest request, ActionResponse response) throws Exception {
+		String cmd = ParamUtil.getString(request, NabookConstants.CMD);
+		try {
+			if (cmd.equals(NabookConstants.ADD)) {
+				addBookstore(request, response);
+			} else if (cmd.equals(NabookConstants.UPDATE)) {
+				updateBookstore(request, response);
+			} else if (cmd.equals(NabookConstants.DELETE)) {
+				deleteBookstore(request, response);
+			} else {
+				System.out.println("Command not found");
+			}
+		} catch (Exception e) {
+
+		}
 	}
 
 }

@@ -4,12 +4,12 @@ import org.osgi.service.component.annotations.Component;
 
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
-import com.nabook.admin.constants.NabookAdminConstants;
+import com.nabook.util.NabookConstants;
 
 @Component(
 	property = {
 		"com.liferay.portlet.friendly-url-routes=META-INF/configs/routes.xml",
-		"javax.portlet.name=" + NabookAdminConstants.PORTLET_NABOOKADMIN,
+		"javax.portlet.name=" + NabookConstants.PORTLET_NABOOKADMIN,
 	},
 	service = FriendlyURLMapper.class
 )
@@ -20,5 +20,5 @@ public class NabookAdminFriendlyURLMapper extends DefaultFriendlyURLMapper {
 		return _MAPPING;
 	}
 
-	private static final String _MAPPING = NabookAdminConstants.NABOOK_MAPPING;
+	private static final String _MAPPING = NabookConstants.NABOOK_MAPPING;
 }

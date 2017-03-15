@@ -23,9 +23,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services.
+ * This class is used by SOAP remote services, specifically {@link com.nabook.service.http.AddressServiceSoap}.
  *
  * @author phantoan
+ * @see com.nabook.service.http.AddressServiceSoap
  * @generated
  */
 @ProviderType

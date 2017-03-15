@@ -3,8 +3,8 @@ package com.nabook.portlet;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.nabook.constants.NabookConstants;
-import com.nabook.constants.WebKeys;
 
 import java.io.IOException;
 

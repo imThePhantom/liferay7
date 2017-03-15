@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -36,13 +37,16 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import com.nabook.model.Cart;
 import com.nabook.model.CartModel;
+import com.nabook.model.CartSoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +62,7 @@ import java.util.Map;
  * @see CartModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class CartModelImpl extends BaseModelImpl<Cart> implements CartModel {
 	/*
@@ -113,6 +118,54 @@ public class CartModelImpl extends BaseModelImpl<Cart> implements CartModel {
 	public static final long USERID_COLUMN_BITMASK = 8L;
 	public static final long UUID_COLUMN_BITMASK = 16L;
 	public static final long CARTID_COLUMN_BITMASK = 32L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static Cart toModel(CartSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		Cart model = new CartImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setCartId(soapModel.getCartId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setBookId(soapModel.getBookId());
+		model.setQuantity(soapModel.getQuantity());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<Cart> toModels(CartSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<Cart> models = new ArrayList<Cart>(soapModels.length);
+
+		for (CartSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.nabook.service.util.ServiceProps.get(
 				"lock.expiration.time.com.nabook.model.Cart"));
 
@@ -233,6 +286,7 @@ public class CartModelImpl extends BaseModelImpl<Cart> implements CartModel {
 		}
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -256,6 +310,7 @@ public class CartModelImpl extends BaseModelImpl<Cart> implements CartModel {
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getCartId() {
 		return _cartId;
@@ -266,6 +321,7 @@ public class CartModelImpl extends BaseModelImpl<Cart> implements CartModel {
 		_cartId = cartId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -288,6 +344,7 @@ public class CartModelImpl extends BaseModelImpl<Cart> implements CartModel {
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -310,6 +367,7 @@ public class CartModelImpl extends BaseModelImpl<Cart> implements CartModel {
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -320,6 +378,7 @@ public class CartModelImpl extends BaseModelImpl<Cart> implements CartModel {
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -336,6 +395,7 @@ public class CartModelImpl extends BaseModelImpl<Cart> implements CartModel {
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -374,6 +434,7 @@ public class CartModelImpl extends BaseModelImpl<Cart> implements CartModel {
 		return _originalUserId;
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -389,6 +450,7 @@ public class CartModelImpl extends BaseModelImpl<Cart> implements CartModel {
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public long getBookId() {
 		return _bookId;
@@ -411,6 +473,7 @@ public class CartModelImpl extends BaseModelImpl<Cart> implements CartModel {
 		return _originalBookId;
 	}
 
+	@JSON
 	@Override
 	public int getQuantity() {
 		return _quantity;

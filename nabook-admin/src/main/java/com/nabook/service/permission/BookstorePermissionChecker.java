@@ -7,9 +7,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.nabook.admin.constants.NabookAdminConstants;
 import com.nabook.model.Bookstore;
 import com.nabook.service.BookstoreLocalServiceUtil;
+import com.nabook.util.NabookConstants;
 
 @Component(immediate = true, property = { "model.class.name=com.nabook.model.Bookstore" })
 public class BookstorePermissionChecker implements BaseModelPermissionChecker {
@@ -58,6 +58,6 @@ public class BookstorePermissionChecker implements BaseModelPermissionChecker {
 	@Override
 	public void checkBaseModel(PermissionChecker permissionChecker, long groupId, long primaryKey, String actionId)
 			throws PortalException {
-		check(permissionChecker, primaryKey, NabookAdminConstants.PORTLET_NABOOKADMIN, actionId);
+		check(permissionChecker, primaryKey, NabookConstants.PORTLET_NABOOKADMIN, actionId);
 	}
 }

@@ -15,19 +15,19 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.CountryServiceUtil;
 import com.liferay.portal.kernel.service.RegionServiceUtil;
-import com.nabook.admin.constants.NabookAdminConstants;
+import com.nabook.util.NabookConstants;
 
-@Component(
-	immediate = true, 
-	property = {
-		"javax.portlet.name=" + NabookAdminConstants.PORTLET_NABOOKADMIN
-	}, 
-	service = MVCResourceCommand.class
-)
+@Component(immediate = true, property = { "javax.portlet.name=" + NabookConstants.PORTLET_NABOOKADMIN,
+		"mvc.command.name=getRegion" }, service = MVCResourceCommand.class)
 public class NabookAdminResourceCommand implements MVCResourceCommand {
 
 	@Override
 	public boolean serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			throws PortletException {
+		return getRegion(resourceRequest, resourceResponse);
+	}
+
+	protected boolean getRegion(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 			throws PortletException {
 		String countryA2 = resourceRequest.getParameter("countryA2");
 		JSONArray jsonResults = JSONFactoryUtil.createJSONArray();
@@ -54,6 +54,7 @@ public class NabookAdminResourceCommand implements MVCResourceCommand {
 			}
 		}
 		return false;
+
 	}
 
 }

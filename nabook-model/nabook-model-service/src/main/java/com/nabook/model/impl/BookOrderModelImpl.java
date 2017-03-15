@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -36,13 +37,16 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import com.nabook.model.BookOrder;
 import com.nabook.model.BookOrderModel;
+import com.nabook.model.BookOrderSoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +62,7 @@ import java.util.Map;
  * @see BookOrderModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 	implements BookOrderModel {
@@ -130,7 +135,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		TABLE_COLUMNS_MAP.put("payment", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table nab_BookOrder (uuid_ VARCHAR(75) null,bookOrderId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,userId LONG,userName VARCHAR(75) null,status VARCHAR(75) null,billingName VARCHAR(50) null,billingCountry VARCHAR(50) null,billingCity VARCHAR(50) null,billingPrefecture VARCHAR(50) null,billingStreet VARCHAR(255) null,billingZip VARCHAR(75) null,shipToBilling BOOLEAN,shippingName VARCHAR(50) null,shippingCountry VARCHAR(50) null,shippingCity VARCHAR(50) null,shippingPrefecture VARCHAR(50) null,shippingStreet VARCHAR(255) null,shippingZip VARCHAR(75) null,phone VARCHAR(75) null,total VARCHAR(12) null,tax INTEGER,discount INTEGER,shipfee VARCHAR(12) null,payment VARCHAR(12) null)";
+	public static final String TABLE_SQL_CREATE = "create table nab_BookOrder (uuid_ VARCHAR(75) null,bookOrderId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,userId LONG,userName VARCHAR(75) null,status VARCHAR(75) null,billingName VARCHAR(80) null,billingCountry VARCHAR(80) null,billingCity VARCHAR(80) null,billingPrefecture VARCHAR(80) null,billingStreet VARCHAR(255) null,billingZip VARCHAR(75) null,shipToBilling BOOLEAN,shippingName VARCHAR(80) null,shippingCountry VARCHAR(80) null,shippingCity VARCHAR(80) null,shippingPrefecture VARCHAR(80) null,shippingStreet VARCHAR(255) null,shippingZip VARCHAR(75) null,phone VARCHAR(75) null,total VARCHAR(12) null,tax INTEGER,discount INTEGER,shipfee VARCHAR(12) null,payment VARCHAR(12) null)";
 	public static final String TABLE_SQL_DROP = "drop table nab_BookOrder";
 	public static final String ORDER_BY_JPQL = " ORDER BY bookOrder.bookOrderId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY nab_BookOrder.bookOrderId ASC";
@@ -152,6 +157,72 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 	public static final long USERID_COLUMN_BITMASK = 8L;
 	public static final long UUID_COLUMN_BITMASK = 16L;
 	public static final long BOOKORDERID_COLUMN_BITMASK = 32L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static BookOrder toModel(BookOrderSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		BookOrder model = new BookOrderImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setBookOrderId(soapModel.getBookOrderId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setStatus(soapModel.getStatus());
+		model.setBillingName(soapModel.getBillingName());
+		model.setBillingCountry(soapModel.getBillingCountry());
+		model.setBillingCity(soapModel.getBillingCity());
+		model.setBillingPrefecture(soapModel.getBillingPrefecture());
+		model.setBillingStreet(soapModel.getBillingStreet());
+		model.setBillingZip(soapModel.getBillingZip());
+		model.setShipToBilling(soapModel.getShipToBilling());
+		model.setShippingName(soapModel.getShippingName());
+		model.setShippingCountry(soapModel.getShippingCountry());
+		model.setShippingCity(soapModel.getShippingCity());
+		model.setShippingPrefecture(soapModel.getShippingPrefecture());
+		model.setShippingStreet(soapModel.getShippingStreet());
+		model.setShippingZip(soapModel.getShippingZip());
+		model.setPhone(soapModel.getPhone());
+		model.setTotal(soapModel.getTotal());
+		model.setTax(soapModel.getTax());
+		model.setDiscount(soapModel.getDiscount());
+		model.setShipfee(soapModel.getShipfee());
+		model.setPayment(soapModel.getPayment());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<BookOrder> toModels(BookOrderSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<BookOrder> models = new ArrayList<BookOrder>(soapModels.length);
+
+		for (BookOrderSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.nabook.service.util.ServiceProps.get(
 				"lock.expiration.time.com.nabook.model.BookOrder"));
 
@@ -398,6 +469,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		}
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -421,6 +493,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getBookOrderId() {
 		return _bookOrderId;
@@ -431,6 +504,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_bookOrderId = bookOrderId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -453,6 +527,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -475,6 +550,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -485,6 +561,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -511,6 +588,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		return _originalModifiedDate;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -549,6 +627,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		return _originalUserId;
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -564,6 +643,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public String getStatus() {
 		if (_status == null) {
@@ -579,6 +659,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_status = status;
 	}
 
+	@JSON
 	@Override
 	public String getBillingName() {
 		if (_billingName == null) {
@@ -594,6 +675,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_billingName = billingName;
 	}
 
+	@JSON
 	@Override
 	public String getBillingCountry() {
 		if (_billingCountry == null) {
@@ -609,6 +691,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_billingCountry = billingCountry;
 	}
 
+	@JSON
 	@Override
 	public String getBillingCity() {
 		if (_billingCity == null) {
@@ -624,6 +707,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_billingCity = billingCity;
 	}
 
+	@JSON
 	@Override
 	public String getBillingPrefecture() {
 		if (_billingPrefecture == null) {
@@ -639,6 +723,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_billingPrefecture = billingPrefecture;
 	}
 
+	@JSON
 	@Override
 	public String getBillingStreet() {
 		if (_billingStreet == null) {
@@ -654,6 +739,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_billingStreet = billingStreet;
 	}
 
+	@JSON
 	@Override
 	public String getBillingZip() {
 		if (_billingZip == null) {
@@ -669,11 +755,13 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_billingZip = billingZip;
 	}
 
+	@JSON
 	@Override
 	public boolean getShipToBilling() {
 		return _shipToBilling;
 	}
 
+	@JSON
 	@Override
 	public boolean isShipToBilling() {
 		return _shipToBilling;
@@ -684,6 +772,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_shipToBilling = shipToBilling;
 	}
 
+	@JSON
 	@Override
 	public String getShippingName() {
 		if (_shippingName == null) {
@@ -699,6 +788,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_shippingName = shippingName;
 	}
 
+	@JSON
 	@Override
 	public String getShippingCountry() {
 		if (_shippingCountry == null) {
@@ -714,6 +804,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_shippingCountry = shippingCountry;
 	}
 
+	@JSON
 	@Override
 	public String getShippingCity() {
 		if (_shippingCity == null) {
@@ -729,6 +820,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_shippingCity = shippingCity;
 	}
 
+	@JSON
 	@Override
 	public String getShippingPrefecture() {
 		if (_shippingPrefecture == null) {
@@ -744,6 +836,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_shippingPrefecture = shippingPrefecture;
 	}
 
+	@JSON
 	@Override
 	public String getShippingStreet() {
 		if (_shippingStreet == null) {
@@ -759,6 +852,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_shippingStreet = shippingStreet;
 	}
 
+	@JSON
 	@Override
 	public String getShippingZip() {
 		if (_shippingZip == null) {
@@ -774,6 +868,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_shippingZip = shippingZip;
 	}
 
+	@JSON
 	@Override
 	public String getPhone() {
 		if (_phone == null) {
@@ -789,6 +884,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_phone = phone;
 	}
 
+	@JSON
 	@Override
 	public String getTotal() {
 		if (_total == null) {
@@ -804,6 +900,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_total = total;
 	}
 
+	@JSON
 	@Override
 	public int getTax() {
 		return _tax;
@@ -814,6 +911,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_tax = tax;
 	}
 
+	@JSON
 	@Override
 	public int getDiscount() {
 		return _discount;
@@ -824,6 +922,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_discount = discount;
 	}
 
+	@JSON
 	@Override
 	public String getShipfee() {
 		if (_shipfee == null) {
@@ -839,6 +938,7 @@ public class BookOrderModelImpl extends BaseModelImpl<BookOrder>
 		_shipfee = shipfee;
 	}
 
+	@JSON
 	@Override
 	public String getPayment() {
 		if (_payment == null) {

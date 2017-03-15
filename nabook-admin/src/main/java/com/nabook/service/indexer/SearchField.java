@@ -10,8 +10,9 @@ public class SearchField extends Field {
 	
 	public static final String BOOK_ISBN = "ISBN";
 	public static final String BOOK_TITLE = "title";
-	public static final String BOOK_AUTHOR = "author";
 	public static final String BOOK_PUBLISHER = "publisher";
+	
+	public static final String AUTHOR_NAME = "fullName";
 	
 	public SearchField(String name) {
 		super(name);

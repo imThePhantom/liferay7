@@ -85,15 +85,15 @@ public class BookLocalServiceWrapper implements BookLocalService,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext,
 		long userId, java.lang.String isbn, java.lang.String title,
 		java.lang.String subtitle, java.lang.String edition,
-		java.lang.String volume, java.lang.String author,
-		java.lang.String publisher, java.util.Date pubDate,
-		java.lang.String price, java.lang.String description,
-		java.sql.Blob thumbnail, java.sql.Blob sample)
+		java.lang.String volume, java.lang.String publisher,
+		java.util.Date pubDate, java.lang.String price,
+		java.lang.String description, java.sql.Blob thumbnail,
+		java.sql.Blob sample)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _bookLocalService.addBook(serviceContext, userId, isbn, title,
-			subtitle, edition, volume, author, publisher, pubDate, price,
-			description, thumbnail, sample);
+			subtitle, edition, volume, publisher, pubDate, price, description,
+			thumbnail, sample);
 	}
 
 	/**
@@ -196,15 +196,14 @@ public class BookLocalServiceWrapper implements BookLocalService,
 		long userId, long bookId, java.lang.String isbn,
 		java.lang.String title, java.lang.String subtitle,
 		java.lang.String edition, java.lang.String volume,
-		java.lang.String author, java.lang.String publisher,
-		java.util.Date pubDate, java.lang.String price,
-		java.lang.String description, java.sql.Blob thumbnail,
-		java.sql.Blob sample)
+		java.lang.String publisher, java.util.Date pubDate,
+		java.lang.String price, java.lang.String description,
+		java.sql.Blob thumbnail, java.sql.Blob sample)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _bookLocalService.updateBook(serviceContext, userId, bookId,
-			isbn, title, subtitle, edition, volume, author, publisher, pubDate,
-			price, description, thumbnail, sample);
+			isbn, title, subtitle, edition, volume, publisher, pubDate, price,
+			description, thumbnail, sample);
 	}
 
 	/**
@@ -228,6 +227,13 @@ public class BookLocalServiceWrapper implements BookLocalService,
 	public com.nabook.model.BookThumbnailBlobModel getThumbnailBlobModel(
 		java.io.Serializable primaryKey) {
 		return _bookLocalService.getThumbnailBlobModel(primaryKey);
+	}
+
+	@Override
+	public int countAllBook()
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.nabook.exception.NoSuchBookException {
+		return _bookLocalService.countAllBook();
 	}
 
 	@Override
@@ -386,6 +392,13 @@ public class BookLocalServiceWrapper implements BookLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator<com.nabook.model.Book> orderByComparator) {
 		return _bookLocalService.getBooksByUuidAndCompanyId(uuid, companyId,
 			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.nabook.model.Book> search(long companyId,
+		java.lang.String keywords)
+		throws com.liferay.portal.kernel.search.SearchException {
+		return _bookLocalService.search(companyId, keywords);
 	}
 
 	/**

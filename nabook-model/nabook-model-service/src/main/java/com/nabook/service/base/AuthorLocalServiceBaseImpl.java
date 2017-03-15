@@ -121,10 +121,12 @@ public abstract class AuthorLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param authorId the primary key of the author
 	 * @return the author that was removed
 	 * @throws PortalException if a author with the primary key could not be found
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Author deleteAuthor(long authorId) throws PortalException {
+	public Author deleteAuthor(long authorId)
+		throws PortalException, SystemException {
 		return authorPersistence.remove(authorId);
 	}
 

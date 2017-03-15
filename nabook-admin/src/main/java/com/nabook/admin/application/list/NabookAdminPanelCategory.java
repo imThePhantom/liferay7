@@ -1,11 +1,11 @@
 package com.nabook.admin.application.list;
 
-import com.nabook.admin.constants.NabookAdminConstants;
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.nabook.util.NabookConstants;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -24,7 +24,7 @@ public class NabookAdminPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return NabookAdminConstants.CONTROL_PANEL_CATEGORY;
+		return NabookConstants.CONTROL_PANEL_CATEGORY;
 	}
 
 	@Override

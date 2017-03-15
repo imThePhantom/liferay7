@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -36,13 +37,16 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import com.nabook.model.Bookstore;
 import com.nabook.model.BookstoreModel;
+import com.nabook.model.BookstoreSoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +62,7 @@ import java.util.Map;
  * @see BookstoreModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 	implements BookstoreModel {
@@ -106,7 +111,7 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table nab_Bookstore (uuid_ VARCHAR(75) null,bookstoreId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,userId LONG,userName VARCHAR(75) null,name VARCHAR(50) null,country VARCHAR(50) null,city VARCHAR(50) null,prefecture VARCHAR(50) null,street VARCHAR(255) null,zip VARCHAR(75) null,phone VARCHAR(75) null,description VARCHAR(1000) null)";
+	public static final String TABLE_SQL_CREATE = "create table nab_Bookstore (uuid_ VARCHAR(75) null,bookstoreId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,userId LONG,userName VARCHAR(75) null,name VARCHAR(80) null,country VARCHAR(80) null,city VARCHAR(80) null,prefecture VARCHAR(80) null,street VARCHAR(255) null,zip VARCHAR(75) null,phone VARCHAR(75) null,description VARCHAR(1000) null)";
 	public static final String TABLE_SQL_DROP = "drop table nab_Bookstore";
 	public static final String ORDER_BY_JPQL = " ORDER BY bookstore.city ASC, bookstore.prefecture ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY nab_Bookstore.city ASC, nab_Bookstore.prefecture ASC";
@@ -131,6 +136,60 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 	public static final long PREFECTURE_COLUMN_BITMASK = 64L;
 	public static final long STREET_COLUMN_BITMASK = 128L;
 	public static final long UUID_COLUMN_BITMASK = 256L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static Bookstore toModel(BookstoreSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		Bookstore model = new BookstoreImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setBookstoreId(soapModel.getBookstoreId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setName(soapModel.getName());
+		model.setCountry(soapModel.getCountry());
+		model.setCity(soapModel.getCity());
+		model.setPrefecture(soapModel.getPrefecture());
+		model.setStreet(soapModel.getStreet());
+		model.setZip(soapModel.getZip());
+		model.setPhone(soapModel.getPhone());
+		model.setDescription(soapModel.getDescription());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<Bookstore> toModels(BookstoreSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<Bookstore> models = new ArrayList<Bookstore>(soapModels.length);
+
+		for (BookstoreSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.nabook.service.util.ServiceProps.get(
 				"lock.expiration.time.com.nabook.model.Bookstore"));
 
@@ -293,6 +352,7 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 		}
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -316,6 +376,7 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getBookstoreId() {
 		return _bookstoreId;
@@ -326,6 +387,7 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 		_bookstoreId = bookstoreId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -348,6 +410,7 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -370,6 +433,7 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -380,6 +444,7 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -396,6 +461,7 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -422,6 +488,7 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -437,6 +504,7 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -462,6 +530,7 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 		return GetterUtil.getString(_originalName);
 	}
 
+	@JSON
 	@Override
 	public String getCountry() {
 		if (_country == null) {
@@ -487,6 +556,7 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 		return GetterUtil.getString(_originalCountry);
 	}
 
+	@JSON
 	@Override
 	public String getCity() {
 		if (_city == null) {
@@ -512,6 +582,7 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 		return GetterUtil.getString(_originalCity);
 	}
 
+	@JSON
 	@Override
 	public String getPrefecture() {
 		if (_prefecture == null) {
@@ -537,6 +608,7 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 		return GetterUtil.getString(_originalPrefecture);
 	}
 
+	@JSON
 	@Override
 	public String getStreet() {
 		if (_street == null) {
@@ -562,6 +634,7 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 		return GetterUtil.getString(_originalStreet);
 	}
 
+	@JSON
 	@Override
 	public String getZip() {
 		if (_zip == null) {
@@ -577,6 +650,7 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 		_zip = zip;
 	}
 
+	@JSON
 	@Override
 	public String getPhone() {
 		if (_phone == null) {
@@ -602,6 +676,7 @@ public class BookstoreModelImpl extends BaseModelImpl<Bookstore>
 		return GetterUtil.getString(_originalPhone);
 	}
 
+	@JSON
 	@Override
 	public String getDescription() {
 		if (_description == null) {

@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.nabook.model.Book;
 import com.nabook.model.BookModel;
 import com.nabook.model.BookSampleBlobModel;
+import com.nabook.model.BookSoap;
 import com.nabook.model.BookThumbnailBlobModel;
 
 import com.nabook.service.BookLocalServiceUtil;
@@ -47,8 +49,10 @@ import java.io.Serializable;
 import java.sql.Blob;
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -64,6 +68,7 @@ import java.util.Map;
  * @see BookModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 	/*
@@ -117,7 +122,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		TABLE_COLUMNS_MAP.put("sample", Types.BLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table nab_Book (uuid_ VARCHAR(75) null,bookId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,userId LONG,userName VARCHAR(75) null,ISBN VARCHAR(75) null,title VARCHAR(255) null,subtitle VARCHAR(255) null,edition VARCHAR(50) null,volume VARCHAR(50) null,publisher VARCHAR(255) null,pubDate DATE null,price VARCHAR(12) null,description VARCHAR(1000) null,thumbnail BLOB,sample BLOB)";
+	public static final String TABLE_SQL_CREATE = "create table nab_Book (uuid_ VARCHAR(75) null,bookId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,userId LONG,userName VARCHAR(75) null,ISBN VARCHAR(75) null,title VARCHAR(255) null,subtitle VARCHAR(255) null,edition VARCHAR(80) null,volume VARCHAR(80) null,publisher VARCHAR(255) null,pubDate DATE null,price VARCHAR(12) null,description VARCHAR(1000) null,thumbnail BLOB,sample BLOB)";
 	public static final String TABLE_SQL_DROP = "drop table nab_Book";
 	public static final String ORDER_BY_JPQL = " ORDER BY book.title ASC, book.pubDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY nab_Book.title ASC, nab_Book.pubDate DESC";
@@ -138,6 +143,63 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 	public static final long UUID_COLUMN_BITMASK = 16L;
 	public static final long TITLE_COLUMN_BITMASK = 32L;
 	public static final long PUBDATE_COLUMN_BITMASK = 64L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static Book toModel(BookSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		Book model = new BookImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setBookId(soapModel.getBookId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setISBN(soapModel.getISBN());
+		model.setTitle(soapModel.getTitle());
+		model.setSubtitle(soapModel.getSubtitle());
+		model.setEdition(soapModel.getEdition());
+		model.setVolume(soapModel.getVolume());
+		model.setPublisher(soapModel.getPublisher());
+		model.setPubDate(soapModel.getPubDate());
+		model.setPrice(soapModel.getPrice());
+		model.setDescription(soapModel.getDescription());
+		model.setThumbnail(soapModel.getThumbnail());
+		model.setSample(soapModel.getSample());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<Book> toModels(BookSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<Book> models = new ArrayList<Book>(soapModels.length);
+
+		for (BookSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final String MAPPING_TABLE_NAB_BOOKS_AUTHORS_NAME = "nab_Books_Authors";
 	public static final Object[][] MAPPING_TABLE_NAB_BOOKS_AUTHORS_COLUMNS = {
 			{ "companyId", Types.BIGINT },
@@ -330,6 +392,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		}
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -353,6 +416,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getBookId() {
 		return _bookId;
@@ -363,6 +427,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		_bookId = bookId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -385,6 +450,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -407,6 +473,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -417,6 +484,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -433,6 +501,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -459,6 +528,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -474,6 +544,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public String getISBN() {
 		if (_ISBN == null) {
@@ -499,6 +570,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		return GetterUtil.getString(_originalISBN);
 	}
 
+	@JSON
 	@Override
 	public String getTitle() {
 		if (_title == null) {
@@ -516,6 +588,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		_title = title;
 	}
 
+	@JSON
 	@Override
 	public String getSubtitle() {
 		if (_subtitle == null) {
@@ -531,6 +604,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		_subtitle = subtitle;
 	}
 
+	@JSON
 	@Override
 	public String getEdition() {
 		if (_edition == null) {
@@ -546,6 +620,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		_edition = edition;
 	}
 
+	@JSON
 	@Override
 	public String getVolume() {
 		if (_volume == null) {
@@ -561,6 +636,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		_volume = volume;
 	}
 
+	@JSON
 	@Override
 	public String getPublisher() {
 		if (_publisher == null) {
@@ -586,6 +662,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		return GetterUtil.getString(_originalPublisher);
 	}
 
+	@JSON
 	@Override
 	public Date getPubDate() {
 		return _pubDate;
@@ -598,6 +675,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		_pubDate = pubDate;
 	}
 
+	@JSON
 	@Override
 	public String getPrice() {
 		if (_price == null) {
@@ -613,6 +691,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		_price = price;
 	}
 
+	@JSON
 	@Override
 	public String getDescription() {
 		if (_description == null) {
@@ -628,6 +707,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		_description = description;
 	}
 
+	@JSON
 	@Override
 	public Blob getThumbnail() {
 		if (_thumbnailBlobModel == null) {
@@ -658,6 +738,7 @@ public class BookModelImpl extends BaseModelImpl<Book> implements BookModel {
 		}
 	}
 
+	@JSON
 	@Override
 	public Blob getSample() {
 		if (_sampleBlobModel == null) {

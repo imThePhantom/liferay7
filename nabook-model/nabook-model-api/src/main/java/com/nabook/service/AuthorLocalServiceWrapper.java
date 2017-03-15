@@ -80,6 +80,16 @@ public class AuthorLocalServiceWrapper implements AuthorLocalService,
 		return _authorLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.nabook.model.Author addAuthor(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		long userId, java.lang.String fullName, java.lang.String profile)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _authorLocalService.addAuthor(serviceContext, userId, fullName,
+			profile);
+	}
+
 	/**
 	* Adds the author to the database. Also notifies the appropriate model listeners.
 	*
@@ -119,10 +129,12 @@ public class AuthorLocalServiceWrapper implements AuthorLocalService,
 	* @param authorId the primary key of the author
 	* @return the author that was removed
 	* @throws PortalException if a author with the primary key could not be found
+	* @throws SystemException
 	*/
 	@Override
 	public com.nabook.model.Author deleteAuthor(long authorId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _authorLocalService.deleteAuthor(authorId);
 	}
 
@@ -172,6 +184,17 @@ public class AuthorLocalServiceWrapper implements AuthorLocalService,
 		return _authorLocalService.getAuthorByUuidAndGroupId(uuid, groupId);
 	}
 
+	@Override
+	public com.nabook.model.Author updateAuthor(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		long userId, long authorId, java.lang.String fullName,
+		java.lang.String profile)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _authorLocalService.updateAuthor(serviceContext, userId,
+			authorId, fullName, profile);
+	}
+
 	/**
 	* Updates the author in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -181,6 +204,13 @@ public class AuthorLocalServiceWrapper implements AuthorLocalService,
 	@Override
 	public com.nabook.model.Author updateAuthor(com.nabook.model.Author author) {
 		return _authorLocalService.updateAuthor(author);
+	}
+
+	@Override
+	public int countAllAuthor()
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.nabook.exception.NoSuchAuthorException {
+		return _authorLocalService.countAllAuthor();
 	}
 
 	/**
@@ -261,6 +291,21 @@ public class AuthorLocalServiceWrapper implements AuthorLocalService,
 			orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.nabook.model.Author> getAllAuthors()
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.nabook.exception.NoSuchAuthorException {
+		return _authorLocalService.getAllAuthors();
+	}
+
+	@Override
+	public java.util.List<com.nabook.model.Author> getAllAuthors(int start,
+		int end)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.nabook.exception.NoSuchAuthorException {
+		return _authorLocalService.getAllAuthors(start, end);
+	}
+
 	/**
 	* Returns a range of all the authors.
 	*
@@ -325,6 +370,21 @@ public class AuthorLocalServiceWrapper implements AuthorLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator<com.nabook.model.Author> orderByComparator) {
 		return _authorLocalService.getBookAuthors(bookId, start, end,
 			orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.nabook.model.Book> getBooksByAuthor(long authorId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.nabook.exception.NoSuchAuthorException,
+			com.nabook.exception.NoSuchBookException {
+		return _authorLocalService.getBooksByAuthor(authorId);
+	}
+
+	@Override
+	public java.util.List<com.nabook.model.Author> search(long companyId,
+		java.lang.String keywords)
+		throws com.liferay.portal.kernel.search.SearchException {
+		return _authorLocalService.search(companyId, keywords);
 	}
 
 	/**

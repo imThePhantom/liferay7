@@ -85,16 +85,16 @@ public class BookLocalServiceUtil {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext,
 		long userId, java.lang.String isbn, java.lang.String title,
 		java.lang.String subtitle, java.lang.String edition,
-		java.lang.String volume, java.lang.String author,
-		java.lang.String publisher, java.util.Date pubDate,
-		java.lang.String price, java.lang.String description,
-		java.sql.Blob thumbnail, java.sql.Blob sample)
+		java.lang.String volume, java.lang.String publisher,
+		java.util.Date pubDate, java.lang.String price,
+		java.lang.String description, java.sql.Blob thumbnail,
+		java.sql.Blob sample)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addBook(serviceContext, userId, isbn, title, subtitle,
-			edition, volume, author, publisher, pubDate, price, description,
-			thumbnail, sample);
+			edition, volume, publisher, pubDate, price, description, thumbnail,
+			sample);
 	}
 
 	/**
@@ -188,16 +188,15 @@ public class BookLocalServiceUtil {
 		long userId, long bookId, java.lang.String isbn,
 		java.lang.String title, java.lang.String subtitle,
 		java.lang.String edition, java.lang.String volume,
-		java.lang.String author, java.lang.String publisher,
-		java.util.Date pubDate, java.lang.String price,
-		java.lang.String description, java.sql.Blob thumbnail,
-		java.sql.Blob sample)
+		java.lang.String publisher, java.util.Date pubDate,
+		java.lang.String price, java.lang.String description,
+		java.sql.Blob thumbnail, java.sql.Blob sample)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateBook(serviceContext, userId, bookId, isbn, title,
-			subtitle, edition, volume, author, publisher, pubDate, price,
-			description, thumbnail, sample);
+			subtitle, edition, volume, publisher, pubDate, price, description,
+			thumbnail, sample);
 	}
 
 	/**
@@ -218,6 +217,12 @@ public class BookLocalServiceUtil {
 	public static com.nabook.model.BookThumbnailBlobModel getThumbnailBlobModel(
 		java.io.Serializable primaryKey) {
 		return getService().getThumbnailBlobModel(primaryKey);
+	}
+
+	public static int countAllBook()
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.nabook.exception.NoSuchBookException {
+		return getService().countAllBook();
 	}
 
 	public static int getAuthorBooksCount(long authorId) {
@@ -366,6 +371,12 @@ public class BookLocalServiceUtil {
 		return getService()
 				   .getBooksByUuidAndCompanyId(uuid, companyId, start, end,
 			orderByComparator);
+	}
+
+	public static java.util.List<com.nabook.model.Book> search(long companyId,
+		java.lang.String keywords)
+		throws com.liferay.portal.kernel.search.SearchException {
+		return getService().search(companyId, keywords);
 	}
 
 	/**

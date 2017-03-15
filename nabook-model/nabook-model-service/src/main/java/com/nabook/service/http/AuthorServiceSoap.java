@@ -1,0 +1,188 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.nabook.service.http;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import com.nabook.service.AuthorServiceUtil;
+
+import java.rmi.RemoteException;
+
+/**
+ * Provides the SOAP utility for the
+ * {@link AuthorServiceUtil} service utility. The
+ * static methods of this class calls the same methods of the service utility.
+ * However, the signatures are different because it is difficult for SOAP to
+ * support certain types.
+ *
+ * <p>
+ * ServiceBuilder follows certain rules in translating the methods. For example,
+ * if the method in the service utility returns a {@link java.util.List}, that
+ * is translated to an array of {@link com.nabook.model.AuthorSoap}.
+ * If the method in the service utility returns a
+ * {@link com.nabook.model.Author}, that is translated to a
+ * {@link com.nabook.model.AuthorSoap}. Methods that SOAP cannot
+ * safely wire are skipped.
+ * </p>
+ *
+ * <p>
+ * The benefits of using the SOAP utility is that it is cross platform
+ * compatible. SOAP allows different languages like Java, .NET, C++, PHP, and
+ * even Perl, to call the generated services. One drawback of SOAP is that it is
+ * slow because it needs to serialize all calls into a text format (XML).
+ * </p>
+ *
+ * <p>
+ * You can see a list of services at http://localhost:8080/api/axis. Set the
+ * property <b>axis.servlet.hosts.allowed</b> in portal.properties to configure
+ * security.
+ * </p>
+ *
+ * <p>
+ * The SOAP utility is only generated for remote services.
+ * </p>
+ *
+ * @author phantoan
+ * @see AuthorServiceHttp
+ * @see com.nabook.model.AuthorSoap
+ * @see AuthorServiceUtil
+ * @generated
+ */
+@ProviderType
+public class AuthorServiceSoap {
+	public static com.nabook.model.AuthorSoap addAuthor(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		long userId, java.lang.String fullName, java.lang.String profile)
+		throws RemoteException {
+		try {
+			com.nabook.model.Author returnValue = AuthorServiceUtil.addAuthor(serviceContext,
+					userId, fullName, profile);
+
+			return com.nabook.model.AuthorSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int countAllAuthor() throws RemoteException {
+		try {
+			int returnValue = AuthorServiceUtil.countAllAuthor();
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.nabook.model.AuthorSoap deleteAuthor(long authorId)
+		throws RemoteException {
+		try {
+			com.nabook.model.Author returnValue = AuthorServiceUtil.deleteAuthor(authorId);
+
+			return com.nabook.model.AuthorSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.nabook.model.AuthorSoap[] getAllAuthors()
+		throws RemoteException {
+		try {
+			java.util.List<com.nabook.model.Author> returnValue = AuthorServiceUtil.getAllAuthors();
+
+			return com.nabook.model.AuthorSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.nabook.model.AuthorSoap[] getAllAuthors(int start, int end)
+		throws RemoteException {
+		try {
+			java.util.List<com.nabook.model.Author> returnValue = AuthorServiceUtil.getAllAuthors(start,
+					end);
+
+			return com.nabook.model.AuthorSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.nabook.model.BookSoap[] getBooksByAuthor(long authorId)
+		throws RemoteException {
+		try {
+			java.util.List<com.nabook.model.Book> returnValue = AuthorServiceUtil.getBooksByAuthor(authorId);
+
+			return com.nabook.model.BookSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.nabook.model.AuthorSoap[] search(long companyId,
+		java.lang.String keywords) throws RemoteException {
+		try {
+			java.util.List<com.nabook.model.Author> returnValue = AuthorServiceUtil.search(companyId,
+					keywords);
+
+			return com.nabook.model.AuthorSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.nabook.model.AuthorSoap updateAuthor(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		long userId, long authorId, java.lang.String fullName,
+		java.lang.String profile) throws RemoteException {
+		try {
+			com.nabook.model.Author returnValue = AuthorServiceUtil.updateAuthor(serviceContext,
+					userId, authorId, fullName, profile);
+
+			return com.nabook.model.AuthorSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(AuthorServiceSoap.class);
+}

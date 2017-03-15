@@ -1,24 +1,27 @@
 <%@ include file="../init.jsp"%>
-<%@ include file="../home.jsp"%>
-
-<%
-	Bookstore bookstore = null;
-%>
 
 <portlet:renderURL var="viewURL">
 	<portlet:param name="mvcPath" value="/bookstore/view.jsp" />
 </portlet:renderURL>
 
-<liferay-ui:header backURL="<%=viewURL.toString()%>" title="label.bookstore" />
+<%
+	renderResponse.setTitle(LanguageUtil.get(request, "title.add.store"));
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(viewURL);
 
-<liferay-ui:error key="error" message="message.error.exception" />
+	Bookstore bookstore = null;
+%>
 
-<portlet:actionURL name="addBookstore" var="addBookstoreURL"></portlet:actionURL>
-<portlet:resourceURL var="getRegionURL"></portlet:resourceURL>
+<portlet:actionURL name="<%=NabookConstants.ACTION_BOOKSTORE%>"
+	var="addBookstoreURL">
+	<portlet:param name="<%=NabookConstants.CMD%>" value="<%=NabookConstants.ADD%>" />
+</portlet:actionURL>
+<portlet:resourceURL var="getRegionURL" id="getRegion"></portlet:resourceURL>
+
 <c:choose>
 	<c:when
 		test="<%=NabookResourcePermissionChecker.contains(permissionChecker, scopeGroupId,
-							NabookActionKeys.ADD_BOOKSTORE)%>">
+							ActionKeys.ADD_BOOKSTORE)%>">
 		<aui:form action="<%=addBookstoreURL%>">
 			<aui:model-context bean="<%=bookstore%>" model="<%=Bookstore.class%>" />
 
@@ -46,11 +49,10 @@
 					required="true"></aui:input>
 				<aui:input name="street" type="text" label="bookstore.street"
 					required="true"></aui:input>
-				<aui:input name="zip" type="number" label="bookstore.zip">
+				<aui:input name="zip" type="text" label="bookstore.zip">
 					<aui:validator name="digits"></aui:validator>
 				</aui:input>
-				<aui:input name="phone" type="number" label="bookstore.phone"
-					required="true">
+				<aui:input name="phone" type="text" label="bookstore.phone" required="true">
 					<aui:validator name="digits"></aui:validator>
 				</aui:input>
 				<aui:input name="description" type="textarea" label="bookstore.description"></aui:input>
@@ -93,8 +95,8 @@
 								option.value = regions[i];
 								option.text = regions[i];
 								cityList.appendChild(option);
+								console.log(regions[i]);
 							}
-							cityList.value = city;
 						}
 					}}
 				}
@@ -102,3 +104,5 @@
 		});
 	})
 </aui:script>
+	
+

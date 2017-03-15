@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -36,13 +37,16 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import com.nabook.model.Author;
 import com.nabook.model.AuthorModel;
+import com.nabook.model.AuthorSoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +62,7 @@ import java.util.Map;
  * @see AuthorModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class AuthorModelImpl extends BaseModelImpl<Author>
 	implements AuthorModel {
@@ -94,7 +99,7 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 		TABLE_COLUMNS_MAP.put("profile", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table nab_Author (uuid_ VARCHAR(75) null,authorId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fullName VARCHAR(75) null,profile VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table nab_Author (uuid_ VARCHAR(75) null,authorId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fullName VARCHAR(80) null,profile TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table nab_Author";
 	public static final String ORDER_BY_JPQL = " ORDER BY author.fullName ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY nab_Author.fullName ASC";
@@ -114,6 +119,54 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long UUID_COLUMN_BITMASK = 4L;
 	public static final long FULLNAME_COLUMN_BITMASK = 8L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static Author toModel(AuthorSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		Author model = new AuthorImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setAuthorId(soapModel.getAuthorId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setFullName(soapModel.getFullName());
+		model.setProfile(soapModel.getProfile());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<Author> toModels(AuthorSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<Author> models = new ArrayList<Author>(soapModels.length);
+
+		for (AuthorSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final String MAPPING_TABLE_NAB_BOOKS_AUTHORS_NAME = "nab_Books_Authors";
 	public static final Object[][] MAPPING_TABLE_NAB_BOOKS_AUTHORS_COLUMNS = {
 			{ "companyId", Types.BIGINT },
@@ -243,6 +296,7 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 		}
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -266,6 +320,7 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getAuthorId() {
 		return _authorId;
@@ -276,6 +331,7 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 		_authorId = authorId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -298,6 +354,7 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -320,6 +377,7 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -346,6 +404,7 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -361,6 +420,7 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -371,6 +431,7 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -387,6 +448,7 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public String getFullName() {
 		if (_fullName == null) {
@@ -404,6 +466,7 @@ public class AuthorModelImpl extends BaseModelImpl<Author>
 		_fullName = fullName;
 	}
 
+	@JSON
 	@Override
 	public String getProfile() {
 		if (_profile == null) {

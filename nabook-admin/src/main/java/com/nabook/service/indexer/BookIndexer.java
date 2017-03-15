@@ -19,14 +19,14 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.nabook.admin.constants.NabookAdminConstants;
 import com.nabook.model.Book;
 import com.nabook.service.BookLocalServiceUtil;
+import com.nabook.util.NabookConstants;
 
 @Component(service = Indexer.class)
 public class BookIndexer extends BaseIndexer<Book> {
 	public static final String CLASS_NAME = Book.class.getName();
-	public static final String PORTLET_ID = NabookAdminConstants.PORTLET_NABOOKADMIN;
+	public static final String PORTLET_ID = NabookConstants.PORTLET_NABOOKADMIN;
 	
 	public BookIndexer() {
 		setPermissionAware(true);

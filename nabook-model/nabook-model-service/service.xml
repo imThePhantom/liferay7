@@ -7,7 +7,7 @@
 
 	<!--<entity Address > -->
 
-	<entity name="Address" local-service="true" remote-service="false" trash-enabled="true"
+	<entity name="Address" local-service="true" remote-service="true" trash-enabled="true"
 		uuid="true">
 
 		<!-- PK fields -->
@@ -43,7 +43,7 @@
 		</finder>
 	</entity>
 
-	<entity name="Author" local-service="true" remote-service="false" uuid="true">
+	<entity name="Author" local-service="true" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 		<column name="authorId" type="long" primary="true"></column>
@@ -76,7 +76,7 @@
 
 	<!--<entity Book> -->
 
-	<entity name="Book" local-service="true" remote-service="false" uuid="true">
+	<entity name="Book" local-service="true" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 		<column name="bookId" primary="true" type="long"></column>
@@ -127,7 +127,7 @@
 
 	<!--<entity BookOrder> -->
 
-	<entity name="BookOrder" local-service="true" remote-service="false" uuid="true">
+	<entity name="BookOrder" local-service="true" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 		<column name="bookOrderId" primary="true" type="long"></column>
@@ -175,7 +175,7 @@
 
 	<!--<entity Bookstore> -->
 
-	<entity name="Bookstore" local-service="true" uuid="true" remote-service="false">
+	<entity name="Bookstore" local-service="true" uuid="true" remote-service="true">
 
 		<!-- PK fields -->
 		<column name="bookstoreId" type="long" primary="true"></column>
@@ -231,7 +231,7 @@
 
 	<!--<entity Cart > -->
 
-	<entity name="Cart" local-service="true" remote-service="false" uuid="true">
+	<entity name="Cart" local-service="true" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 		<column name="cartId" primary="true" type="long"></column>
@@ -262,7 +262,7 @@
 
 	<!--<entity OrderItem > -->
 
-	<entity name="OrderItem" local-service="true" remote-service="false" uuid="true">
+	<entity name="OrderItem" local-service="true" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 		<column name="orderItemId" primary="true" type="long"></column>
@@ -301,7 +301,7 @@
 
 	<!--<entity StockItem> -->
 
-	<entity name="StockItem" local-service="true" uuid="true" remote-service="false">
+	<entity name="StockItem" local-service="true" uuid="true" remote-service="true">
 
 		<!-- PK fields -->
 		<column name="stockItemId" type="long" primary="true"></column>
@@ -333,7 +333,6 @@
 		<exception>BookISBN</exception>
 		<exception>BookTitle</exception>
 		<exception>BookPrice</exception>
-		<exception>BookAuthor</exception>
 		<exception>BookPublisher</exception>
 		<exception>CartUserId</exception>
 		<exception>CartBookId</exception>

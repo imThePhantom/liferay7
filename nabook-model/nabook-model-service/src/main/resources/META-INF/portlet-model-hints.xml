@@ -2,8 +2,8 @@
 
 <model-hints>
 	<hint-collection name="TEXT">
-		<hint name="max-length">50</hint>
-		<hint name="display-width">50</hint>
+		<hint name="max-length">80</hint>
+		<hint name="display-width">80</hint>
 	</hint-collection>
 	<hint-collection name="STRING">
 		<hint name="max-length">255</hint>
@@ -12,6 +12,10 @@
 	<hint-collection name="TEXT_AREA">
 		<hint name="max-length">1000</hint>
 		<hint name="display-width">350</hint>
+	</hint-collection>
+	<hint-collection name="PROFILE">
+		<hint name="max-length">5000</hint>
+		<hint name="display-width">500</hint>
 	</hint-collection>
 	<hint-collection name="BIG_DECIMAL">
 		<hint name="max-length">12</hint>
@@ -58,8 +62,12 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="fullName" type="String" />
-		<field name="profile" type="String" />
+		<field name="fullName" type="String">
+			<hint-collection name="TEXT" />
+		</field>
+		<field name="profile" type="String">
+			<hint-collection name="PROFILE" />
+		</field>
 	</model>
 	<model name="com.nabook.model.Book">
 		<field name="uuid" type="String" />
